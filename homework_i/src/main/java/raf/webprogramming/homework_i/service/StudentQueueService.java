@@ -15,6 +15,7 @@ import java.util.Stack;
 /**
  * This service will be used to initialize a certain amount of students to be used by
  * {@link ProfessorQueue} or {@link AssistantQueue}
+ * It will also count the average score and the number of students that made it to defend their work.
  */
 @Slf4j
 public class StudentQueueService {
@@ -48,6 +49,10 @@ public class StudentQueueService {
         studentQueue = new Stack<>();
         Random random = new Random();
 
+        /*
+        Here the idea is to create students and sort them in that way when you pop prom the stack you get the student
+        with the smallest arrive time.
+         */
         Student[] students = new Student[studentNumber];
 
         for(int i = 0; i < studentCreationNumber; i++) {
@@ -83,6 +88,10 @@ public class StudentQueueService {
         }
     }
 
+    /**
+     * This is being used so we can use a flag if the professor is available. In terms that
+     * if two students are defending their work, other two can't come in at the same time.
+     */
     public void updateProfessorStatus() {
         synchronized (this) {
             professorCounter++;

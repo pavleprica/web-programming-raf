@@ -13,19 +13,6 @@ public class Main {
         PrintService.getInstance();
 
         new Thread(new AssignToQueue()).start();
-
-
-//        for (int i = 0; i < studentSumNumber; i++) {
-//            new Thread(
-//                    new ProfessorQueueService(barrier,
-//                    StudentQueueService.getInstance().getStudentQueue().pop())
-//            ).start();
-//            new Thread(
-//                    new AssistantQueueService(semaphore,
-//                            StudentQueueService.getInstance().getStudentQueue().pop())
-//            ).start();
-//            Thread.sleep(1000);
-//        }
     }
 
 }

@@ -10,6 +10,10 @@ import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+/**
+ * {@link ProfessorQueue} represents scoring of students in the professor office. The barrier will take two at once
+ * but the flag from {@link StudentQueueService} will determine if the next two can come in.
+ */
 @Slf4j
 public class ProfessorQueue implements Runnable {
 

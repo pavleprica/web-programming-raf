@@ -9,6 +9,10 @@ import raf.webprogramming.homework_i.service.StudentQueueService;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
+/**
+ * {@link AssistantQueue} represents a single scoring of a student in the assistant office.
+ * It will take one by one student with a guarantee with using a semaphore in form of a mutex.
+ */
 @Slf4j
 public class AssistantQueue implements Runnable {
 

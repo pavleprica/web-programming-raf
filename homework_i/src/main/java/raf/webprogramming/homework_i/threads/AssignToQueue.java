@@ -94,7 +94,8 @@ public class AssignToQueue implements Runnable {
         long stop = start + 5000;
 
         /*
-        In this loop
+        This loop runs when the current time is after the randomly created start and until current time
+        surpasses the stop time.
          */
         do {
             if (System.currentTimeMillis() > start) {
@@ -124,8 +125,14 @@ public class AssignToQueue implements Runnable {
 
         } while (System.currentTimeMillis() <= stop);
 
+        /*
+        We interrupt the threads left to execute.
+         */
         startedThreads.forEach(Thread::interrupt);
 
+        /*
+        Printing the events in a fashioned order
+         */
         PrintService.getInstance().printLists();
 
         log.info("Prosek ocena: {}. Broj studenata koji su stigli: {}. Timestamp: {}",

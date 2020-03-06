@@ -4,6 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 
+/**
+ * Since buffering and printing can make it really hard to follow when is what being executed with threads
+ * this service will collect all prints and then be used to print them in correct order afterwards.
+ */
 @Slf4j
 public class PrintService {
 
