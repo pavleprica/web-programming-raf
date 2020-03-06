@@ -1,11 +1,13 @@
 package raf.webprogramming.homework_i.threads;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import raf.webprogramming.homework_i.model.Student;
 import raf.webprogramming.homework_i.service.PrintService;
 import raf.webprogramming.homework_i.service.StudentQueueService;
 
 import java.util.Random;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 @Slf4j
@@ -15,9 +17,12 @@ public class ProfessorQueue implements Runnable {
 
     private Student student;
 
-    public ProfessorQueue(CyclicBarrier barrier, Student student) {
+    private long start;
+
+    public ProfessorQueue(CyclicBarrier barrier, Student student, long start) {
         this.barrier = barrier;
         this.student = student;
+        this.start = start;
     }
 
     @Override
@@ -25,7 +30,8 @@ public class ProfessorQueue implements Runnable {
 //        log.info("PROFESOR: Student sa id: {}, je dosao na red. Timestamp: {}",
 //                student.getId(), System.currentTimeMillis());
         PrintService.getInstance().updatePrintListProfessor("PROFESOR: Student sa id: "
-                + student.getId() + ", je dosao na red. Timestamp: " + System.currentTimeMillis());
+                + student.getId() + ", je dosao na red. Timestamp: " + System.currentTimeMillis()
+                + " Razlika od starta: " + (System.currentTimeMillis() - start));
 
         try {
             StudentQueueService.getInstance().updateProfessorStatus();
@@ -49,7 +55,11 @@ public class ProfessorQueue implements Runnable {
                         + student.getScore() + ". Timepstamp: " + System.currentTimeMillis());
                 StudentQueueService.getInstance().updateProfessorStatus();
             }
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
+//            PrintService.getInstance().updatePrintListProfessor("PROFESOR: Student sa id: "
+//                    + student.getId() + ", je prekinut. Timestamp: " + System.currentTimeMillis());
+            log.error("PROFESOR: Student sa id: {} je prekinut. Timestamp: {}", student.getId(), System.currentTimeMillis());
+        } catch (BrokenBarrierException e) {
             e.printStackTrace();
         }
     }

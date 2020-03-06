@@ -91,7 +91,7 @@ public class AssignToQueue implements Runnable {
         Making a random start time from the program start between 5 and 10 seconds.
          */
         long start = System.currentTimeMillis() + random.nextInt(5000) + 5000;
-        long stop = start + 5000;
+        long stop = start + 1000;
 
         /*
         In this loop
@@ -104,7 +104,7 @@ public class AssignToQueue implements Runnable {
                         Student student = professorStudents.get(0);
                         professorStudents.remove(0);
 
-                        Thread newThread = new Thread(new ProfessorQueue(cyclicBarrier, student));
+                        Thread newThread = new Thread(new ProfessorQueue(cyclicBarrier, student, start));
                         startedThreads.add(newThread);
                         newThread.start();
                     }
@@ -115,7 +115,7 @@ public class AssignToQueue implements Runnable {
                         Student student = assistantStudents.get(0);
                         assistantStudents.remove(0);
 
-                        Thread newThread = new Thread(new AssistantQueue(semaphore, student));
+                        Thread newThread = new Thread(new AssistantQueue(semaphore, student, start));
                         startedThreads.add(newThread);
                         newThread.start();
                     }
@@ -128,8 +128,19 @@ public class AssignToQueue implements Runnable {
 
         PrintService.getInstance().printLists();
 
-        log.info("Prosek ocena: {}. Timestamp: {}",
-                StudentQueueService.getInstance().getCurrentAvg(), System.currentTimeMillis());
+        log.info("Prosek ocena: {}. Broj studenata koji su stigli: {}. Timestamp: {}",
+                StudentQueueService.getInstance().getCurrentAvg(),
+                StudentQueueService.getInstance().getStudentsCountedInAvg(),
+                System.currentTimeMillis());
+
+        log.error("Studenti koji nisu stigli na ocenjivanje:");
+        professorStudents.forEach(student -> {
+            log.error("Student id: {}", student.getId());
+        });
+        assistantStudents.forEach(student -> {
+            log.error("Student id: {}", student.getId());
+        });
+
         log.info("Start: {} - Stop: {} - Difference: {}", start, stop, (System.currentTimeMillis() - start));
 
         }

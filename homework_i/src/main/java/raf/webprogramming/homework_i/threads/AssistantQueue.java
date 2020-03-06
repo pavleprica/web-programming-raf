@@ -1,5 +1,6 @@
 package raf.webprogramming.homework_i.threads;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import raf.webprogramming.homework_i.model.Student;
 import raf.webprogramming.homework_i.service.PrintService;
@@ -15,9 +16,12 @@ public class AssistantQueue implements Runnable {
 
     private Student student;
 
-    public AssistantQueue(Semaphore semaphore, Student student) {
+    private long start;
+
+    public AssistantQueue(Semaphore semaphore, Student student, long start) {
         this.semaphore = semaphore;
         this.student = student;
+        this.start = start;
     }
 
     @Override
@@ -25,7 +29,8 @@ public class AssistantQueue implements Runnable {
 //        log.info("ASISTENT: Student sa id: {}, je dosao na red. Timestamp: {}",
 //                student.getId(), System.currentTimeMillis());
         PrintService.getInstance().updatePrintListAssistant("ASISTENT: Student sa id: "
-                + student.getId() + ", je dosao na red. Timestamp: " + System.currentTimeMillis());
+                + student.getId() + ", je dosao na red. Timestamp: " + System.currentTimeMillis()
+                + " Razlika od starta: " + (System.currentTimeMillis() - start));
 
         try {
             semaphore.acquire();
@@ -48,8 +53,10 @@ public class AssistantQueue implements Runnable {
             }
 
             semaphore.release();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (InterruptedException e) {
+//            PrintService.getInstance().updatePrintListAssistant("ASISTENT: Student sa id: "
+//                    + student.getId() + ", je prekinut. Timestamp: " + System.currentTimeMillis());
+            log.error("ASISTENT: Student sa id: {} je prekinut. Timestamp: {}", student.getId(), System.currentTimeMillis());
         }
     }
 }

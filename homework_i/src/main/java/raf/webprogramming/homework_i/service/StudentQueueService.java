@@ -28,6 +28,9 @@ public class StudentQueueService {
     @Getter
     private float currentAvg;
 
+    @Getter
+    private int studentsCountedInAvg = 0;
+
     @Getter @Setter
     private boolean isProfessorAvailable = true;
     private int professorCounter = 0;
@@ -76,6 +79,7 @@ public class StudentQueueService {
         synchronized (this) {
             scoreSum += student.getScore();
             currentAvg = scoreSum / (float) studentNumber;
+            studentsCountedInAvg++;
         }
     }
 

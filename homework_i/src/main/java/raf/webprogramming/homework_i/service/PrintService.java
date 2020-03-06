@@ -42,8 +42,10 @@ public class PrintService {
     }
 
     public void printLists() {
-        printListProfessor.forEach(log::info);
-        printListAssistant.forEach(log::info);
+        synchronized (this) {
+            printListProfessor.forEach(log::info);
+            printListAssistant.forEach(log::info);
+        }
     }
 
 }
