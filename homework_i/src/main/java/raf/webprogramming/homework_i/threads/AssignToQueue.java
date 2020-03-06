@@ -91,7 +91,7 @@ public class AssignToQueue implements Runnable {
         Making a random start time from the program start between 5 and 10 seconds.
          */
         long start = System.currentTimeMillis() + random.nextInt(5000) + 5000;
-        long stop = start + 1000;
+        long stop = start + 5000;
 
         /*
         In this loop
