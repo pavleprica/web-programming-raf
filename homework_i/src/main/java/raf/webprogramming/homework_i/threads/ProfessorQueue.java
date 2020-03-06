@@ -41,7 +41,8 @@ public class ProfessorQueue implements Runnable {
 //                log.info("PROFESOR: Student sa id: {}, je usao na propitivanje. Timestamp: {}",
 //                        student.getId(), System.currentTimeMillis());
                 PrintService.getInstance().updatePrintListProfessor("PROFESOR: Student sa id: "
-                        + student.getId() + ", je usao na propitivanje. Timestamp: " + System.currentTimeMillis());
+                        + student.getId() + ", je usao na propitivanje. Timestamp: " + System.currentTimeMillis()
+                        + ":" + student.getTimeToDefendWork());
                 Thread.sleep(student.getTimeToDefendWork());
 
                 Random random = new Random();

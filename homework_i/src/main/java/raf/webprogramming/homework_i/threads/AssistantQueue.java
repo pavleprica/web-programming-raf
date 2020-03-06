@@ -39,7 +39,8 @@ public class AssistantQueue implements Runnable {
 //                log.info("ASISTENT: Student sa id: {}, je usao na propitivanje. Timestamp: {}",
 //                        student.getId(), System.currentTimeMillis());
                 PrintService.getInstance().updatePrintListAssistant("ASISTENT: Student sa id: "
-                        + student.getId() + ", je usao na propitivanje. Timestamp: " + System.currentTimeMillis());
+                        + student.getId() + ", je usao na propitivanje. Timestamp: " + System.currentTimeMillis()
+                        + ":" + student.getTimeToDefendWork());
                 Thread.sleep(student.getTimeToDefendWork());
 
                 Random random = new Random();
